@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Công cụ lọc dữ liệu tài khoản Liên Quân Mobile - bản HTML đơn file" />
   <meta name="theme-color" content="#5865f2" />
-  <title>Lọc acc LQ - Auto Filter Fixed</title>
+  <title>Lọc acc LQ - by @teddyvrp</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>⚔️</text></svg>">
 
   <style>
@@ -59,7 +59,7 @@
     }
 
     .container {
-      width: min(1500px, calc(100% - 32px));
+      width: min(1600px, calc(100% - 32px));
       margin: 18px auto;
     }
 
@@ -85,13 +85,13 @@
     .subtitle {
       margin: 6px 0 0;
       color: var(--muted);
+      font-size: 14px;
     }
 
     .workspace {
       display: grid;
-      grid-template-columns: 330px 1fr 420px;
+      grid-template-columns: 1fr;
       gap: 18px;
-      align-items: start;
     }
 
     .filter-panel,
@@ -140,20 +140,22 @@
       padding: 0 8px;
     }
 
-    .filter-row {
+    .filter-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
     }
 
     .filter-item {
-      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
     }
 
     label {
       display: block;
       font-weight: 700;
       margin-bottom: 7px;
+      font-size: 13px;
     }
 
     small {
@@ -175,6 +177,7 @@
       color: var(--text);
       outline: none;
       transition: border .2s ease, box-shadow .2s ease, transform .15s ease;
+      font-family: inherit;
     }
 
     .input-text:focus,
@@ -186,24 +189,18 @@
     }
 
     .text-area {
-      min-height: 360px;
+      min-height: 300px;
       resize: vertical;
       font-family: Consolas, "Courier New", monospace;
       line-height: 1.45;
-    }
-
-    .text-area--output {
-      min-height: 420px;
-    }
-
-    .paste-area {
-      height: 300px;
+      font-size: 13px;
     }
 
     .data-info {
       margin-bottom: 10px;
       color: var(--muted);
       font-weight: 700;
+      font-size: 13px;
     }
 
     .button-group,
@@ -219,7 +216,14 @@
     }
 
     .action-buttons {
-      margin-top: 14px;
+      margin: 14px 0;
+      padding: 14px 18px;
+      background: rgba(255,255,255,.35);
+      border-radius: 14px;
+    }
+
+    body.dark-mode .action-buttons {
+      background: rgba(15,23,42,.28);
     }
 
     .btn {
@@ -309,14 +313,6 @@
       background: linear-gradient(135deg, var(--secondary-hover), #747d86);
     }
 
-    .btn-danger {
-      background: linear-gradient(135deg, var(--danger), #ff6b5e);
-    }
-
-    .btn-danger:hover {
-      background: linear-gradient(135deg, var(--danger-hover), #ff5445);
-    }
-
     .btn-icon {
       width: 42px;
       height: 42px;
@@ -330,6 +326,7 @@
       place-items: center;
       font-size: 18px;
       transition: .18s ease;
+      padding: 0;
     }
 
     .btn-icon:hover {
@@ -344,25 +341,29 @@
       gap: 8px;
       font-weight: 650;
       margin: 8px 0;
+      cursor: pointer;
     }
 
     .sss-skin-list {
-      padding: 8px 10px;
+      padding: 12px;
       border-radius: 12px;
       background: rgba(88,101,242,.08);
-      margin-top: 8px;
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 10px;
     }
 
     .log-area {
-      min-height: 150px;
-      max-height: 220px;
+      min-height: 180px;
+      max-height: 280px;
       overflow: auto;
       background: var(--input);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 12px;
       font-family: Consolas, monospace;
-      font-size: 13px;
+      font-size: 12px;
       line-height: 1.5;
     }
 
@@ -373,6 +374,12 @@
 
     .log-error {
       color: #ff6b6b;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .log-success {
+      color: #2ecc71;
       font-weight: 800;
       margin-bottom: 5px;
     }
@@ -390,7 +397,7 @@
     }
 
     .modal-content {
-      padding: 20px;
+      padding: 24px;
     }
 
     .modal-header {
@@ -398,11 +405,17 @@
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
     }
 
     .modal-description {
       color: var(--muted);
+      margin-bottom: 14px;
+      font-size: 14px;
     }
 
     .hidden-file-input {
@@ -430,34 +443,34 @@
       background: rgba(243,156,18,.12);
       color: var(--text);
       border-radius: 12px;
-      padding: 10px 12px;
-      margin-bottom: 12px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
       font-size: 13px;
-      line-height: 1.45;
+      line-height: 1.5;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
     }
 
     @media (max-width: 1200px) {
-      .workspace {
+      .two-column {
         grid-template-columns: 1fr;
       }
 
-      .text-area,
-      .text-area--output {
-        min-height: 260px;
+      .filter-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       }
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
       .container {
-        width: min(100% - 18px, 1500px);
+        width: calc(100% - 16px);
       }
 
-      .app-header {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .filter-row {
+      .filter-grid {
         grid-template-columns: 1fr;
       }
 
@@ -469,112 +482,117 @@
 </head>
 
 <body>
-  <noscript>
-    <p style="color:red;text-align:center;font-weight:700">
-      Tool này cần bật JavaScript để hoạt động.
-    </p>
-  </noscript>
-
   <div class="container">
     <header class="app-header">
-      <div class="header-content">
+      <div>
         <h1>⚔️ Lọc acc LQ by @teddyvrp</h1>
-        <p class="subtitle">Bản HTML đơn file - tự lọc đúng theo lựa chọn sau khi upload</p>
+        <p class="subtitle">Công cụ lọc dữ liệu tài khoản - chạy toàn bộ trên trình duyệt của bạn</p>
       </div>
       <button id="btn-theme-toggle" class="btn-icon" title="Toggle dark mode" aria-label="Chế độ tối">🌙</button>
     </header>
 
     <div class="warning-box">
-      Tool chạy cục bộ trên trình duyệt. Không tự đăng nhập, không quét tài khoản, không gửi dữ liệu lên server.
+      ⚠️ Tool chạy cục bộ trên trình duyệt. Không tự động đăng nhập, không quét tài khoản, không gửi dữ liệu lên server.
     </div>
 
     <div class="workspace">
+      <!-- FILTER PANEL -->
       <aside class="filter-panel">
         <div class="filter-header">
-          <h2>Bộ Lọc</h2>
+          <h2>🔍 Bộ Lọc</h2>
           <button id="btn-collapse-filters" class="btn-icon" title="Thu gọn bộ lọc" aria-label="Thu gọn">⌞</button>
         </div>
 
         <form id="filter-form" class="filter-form">
-          <fieldset class="filter-section filter-section--actions">
+          <!-- Quick Actions -->
+          <fieldset class="filter-section">
             <legend>Hành Động Nhanh</legend>
-            <div class="button-group button-group--vertical">
+            <div class="button-group">
               <button type="button" id="btn-load-file" class="btn btn-primary">📁 Load file</button>
               <button type="button" id="btn-paste-data" class="btn btn-primary">📋 Paste data</button>
               <button type="button" id="btn-reset" class="btn btn-secondary">🔄 Reset</button>
             </div>
           </fieldset>
 
+          <!-- Hero & Skin -->
           <fieldset class="filter-section">
             <legend>Tướng & Skin</legend>
+            <div class="filter-grid">
+              <div class="filter-item">
+                <label for="heroes">Tướng (bỏ trống = tất cả)</label>
+                <input type="text" id="heroes" class="input-text" placeholder="VD: 1-120 hoặc 1,5,10">
+                <small>Range: 1-120 | Danh sách: 1,5,10</small>
+              </div>
 
-            <div class="filter-item">
-              <label for="heroes">Tướng</label>
-              <input type="text" id="heroes" class="input-text" placeholder="VD: 1-120 hoặc 1,5,10" value="1-120">
-              <small>Hỗ trợ dạng range hoặc danh sách số.</small>
+              <div class="filter-item">
+                <label for="skins">Skin (bỏ trống = tất cả)</label>
+                <input type="text" id="skins" class="input-text" placeholder="VD: 50-150">
+                <small>Range số lượng skin</small>
+              </div>
             </div>
 
-            <div class="filter-item">
-              <label for="skins">Skin</label>
-              <input type="text" id="skins" class="input-text" placeholder="VD: 50-150">
-              <small>Range số lượng skin.</small>
-            </div>
-
-            <div class="filter-item filter-item--checkbox">
-              <label for="filter-sss" class="label-checkbox">
+            <div class="filter-item" style="margin-top: 12px;">
+              <label class="label-checkbox">
                 <input type="checkbox" id="filter-sss" class="checkbox">
                 <span>🗑️ Lọc SSS rác</span>
               </label>
+            </div>
 
-              <div class="sss-skin-list" id="sss-skin-list">
-                <label class="label-checkbox"><input type="checkbox" class="sss-skin-checkbox" value="telannas" data-keywords="telannas|tel annas|than su f e e x1|than su fee x1|than su feex1" checked> TelAnnas Thần sứ F.E.E-X1</label>
-                <label class="label-checkbox"><input type="checkbox" class="sss-skin-checkbox" value="bijan" data-keywords="bijan|kinh thien long ky|bijan kinh thien long ky" checked> Bijan Kình thiên Long Kỵ</label>
-                <label class="label-checkbox"><input type="checkbox" class="sss-skin-checkbox" value="trieu van" data-keywords="trieu van|minh chung long de|trieu van minh chung long de" checked> Triệu Vân Minh Chung Long Đế</label>
-                <label class="label-checkbox"><input type="checkbox" class="sss-skin-checkbox" value="violet" data-keywords="violet|vong nguyet long co|violet vong nguyet long co" checked> Violet Vọng nguyệt Long Cơ</label>
-              </div>
+            <div class="sss-skin-list" id="sss-skin-list">
+              <label class="label-checkbox">
+                <input type="checkbox" class="sss-skin-checkbox" value="telannas" data-keywords="telannas|tel annas|than su f e e x1|than su fee x1|than su feex1" checked>
+                <span>TelAnnas Thần sứ F.E.E-X1</span>
+              </label>
+              <label class="label-checkbox">
+                <input type="checkbox" class="sss-skin-checkbox" value="bijan" data-keywords="bijan|kinh thien long ky|bijan kinh thien long ky" checked>
+                <span>Bijan Kình thiên Long Kỵ</span>
+              </label>
+              <label class="label-checkbox">
+                <input type="checkbox" class="sss-skin-checkbox" value="trieu van" data-keywords="trieu van|minh chung long de|trieu van minh chung long de" checked>
+                <span>Triệu Vân Minh Chung Long Đế</span>
+              </label>
+              <label class="label-checkbox">
+                <input type="checkbox" class="sss-skin-checkbox" value="violet" data-keywords="violet|vong nguyet long co|violet vong nguyet long co" checked>
+                <span>Violet Vọng nguyệt Long Cơ</span>
+              </label>
             </div>
           </fieldset>
 
+          <!-- Account Stats -->
           <fieldset class="filter-section">
-            <legend>Thông Số Tài Khoản</legend>
-            <div class="filter-row">
+            <legend>Thông Số Tài Khoản (bỏ trống = tất cả)</legend>
+            <div class="filter-grid">
               <div class="filter-item">
                 <label for="level">Level tối thiểu</label>
-                <input type="number" id="level" class="input-number" placeholder="0" min="0">
+                <input type="number" id="level" class="input-number" placeholder="Không giới hạn" min="0">
               </div>
               <div class="filter-item">
                 <label for="so">Sò tối thiểu</label>
-                <input type="number" id="so" class="input-number" placeholder="0" min="0">
+                <input type="number" id="so" class="input-number" placeholder="Không giới hạn" min="0">
               </div>
-            </div>
-
-            <div class="filter-row">
               <div class="filter-item">
                 <label for="qh">QH tối thiểu</label>
-                <input type="number" id="qh" class="input-number" placeholder="0" min="0">
+                <input type="number" id="qh" class="input-number" placeholder="Không giới hạn" min="0">
               </div>
               <div class="filter-item">
                 <label for="times-recharged">Lần nạp tối thiểu</label>
-                <input type="number" id="times-recharged" class="input-number" placeholder="0" min="0">
+                <input type="number" id="times-recharged" class="input-number" placeholder="Không giới hạn" min="0">
               </div>
             </div>
           </fieldset>
 
+          <!-- Skin Quality -->
           <fieldset class="filter-section">
-            <legend>Chất Lượng Skin</legend>
-
-            <div class="filter-row">
+            <legend>Chất Lượng Skin (bỏ trống = tất cả)</legend>
+            <div class="filter-grid">
               <div class="filter-item">
                 <label for="ss">SS tối thiểu</label>
                 <input type="number" id="ss" class="input-number" placeholder="0" min="0">
               </div>
               <div class="filter-item">
-                <label for="sss">SSS tối thiểu</label>
-                <input type="number" id="sss" class="input-number" placeholder="0" min="0">
+                <label for="sss-count">SSS tối thiểu</label>
+                <input type="number" id="sss-count" class="input-number" placeholder="0" min="0">
               </div>
-            </div>
-
-            <div class="filter-row">
               <div class="filter-item">
                 <label for="anime">ANIME tối thiểu</label>
                 <input type="number" id="anime" class="input-number" placeholder="0" min="0">
@@ -582,52 +600,53 @@
             </div>
           </fieldset>
 
+          <!-- Status & Rank -->
           <fieldset class="filter-section">
-            <legend>Trạng Thái</legend>
+            <legend>Trạng Thái (bỏ trống = tất cả)</legend>
+            <div class="filter-grid">
+              <div class="filter-item">
+                <label for="status">Tình Trạng</label>
+                <select id="status" class="input-select">
+                  <option value="">-- Tất cả --</option>
+                  <option value="Acc Trắng Lỗi Pass">Acc Trắng Lỗi Pass</option>
+                  <option value="Acc Full">Acc Full</option>
+                  <option value="Acc Dính Mỗi Số">Acc Dính Mỗi Số</option>
+                  <option value="Acc Dính Email">Acc Dính Email</option>
+                  <option value="Acc Trắng Thông Tin">Acc Trắng Thông Tin</option>
+                </select>
+              </div>
 
-            <div class="filter-item">
-              <label for="status">Tình Trạng</label>
-              <select id="status" class="input-select">
-                <option value="">-- Tất cả --</option>
-                <option value="Acc Trắng Lỗi Pass">Acc Trắng Lỗi Pass</option>
-                <option value="Acc Full">Acc Full</option>
-                <option value="Acc Dính Mỗi Số">Acc Dính Mỗi Số</option>
-                <option value="Acc Dính Email">Acc Dính Email</option>
-                <option value="Acc Trắng Thông Tin">Acc Trắng Thông Tin</option>
-              </select>
-            </div>
-
-            <div class="filter-item">
-              <label for="rank">Rank</label>
-              <select id="rank" class="input-select">
-                <option value="">-- Tất cả --</option>
-                <option value="Đồng">Đồng</option>
-                <option value="Bạc">Bạc</option>
-                <option value="Vàng">Vàng</option>
-                <option value="Bạch Kim">Bạch Kim</option>
-                <option value="Kim Cương">Kim Cương</option>
-                <option value="Tinh Anh">Tinh Anh</option>
-                <option value="Cao Thủ">Cao Thủ</option>
-                <option value="Đại Cao Thủ">Đại Cao Thủ</option>
-                <option value="Chiến Tướng">Chiến Tướng</option>
-                <option value="Chiến Thần">Chiến Thần</option>
-              </select>
+              <div class="filter-item">
+                <label for="rank">Rank</label>
+                <select id="rank" class="input-select">
+                  <option value="">-- Tất cả --</option>
+                  <option value="Đồng">Đồng</option>
+                  <option value="Bạc">Bạc</option>
+                  <option value="Vàng">Vàng</option>
+                  <option value="Bạch Kim">Bạch Kim</option>
+                  <option value="Kim Cương">Kim Cương</option>
+                  <option value="Tinh Anh">Tinh Anh</option>
+                  <option value="Cao Thủ">Cao Thủ</option>
+                  <option value="Đại Cao Thủ">Đại Cao Thủ</option>
+                  <option value="Chiến Tướng">Chiến Tướng</option>
+                  <option value="Chiến Thần">Chiến Thần</option>
+                </select>
+              </div>
             </div>
           </fieldset>
 
+          <!-- Security & Info -->
           <fieldset class="filter-section">
-            <legend>Bảo Mật & Thông Tin</legend>
-
-            <div class="filter-row">
+            <legend>Bảo Mật & Thông Tin (bỏ trống = tất cả)</legend>
+            <div class="filter-grid">
               <div class="filter-item">
                 <label for="facebook">Facebook</label>
                 <select id="facebook" class="input-select">
                   <option value="">-- Tất cả --</option>
-                  <option value="NO">FB:NO</option>
-                  <option value="DIE">FB:DIE</option>
-                  <option value="LIVE">FB:LIVE</option>
+                  <option value="NO">FB: NO</option>
+                  <option value="DIE">FB: DIE</option>
+                  <option value="LIVE">FB: LIVE</option>
                 </select>
-                <small>Lọc theo trạng thái FB trong dữ liệu: NO / DIE / LIVE.</small>
               </div>
               <div class="filter-item">
                 <label for="ban">Ban</label>
@@ -637,9 +656,6 @@
                   <option value="NO">Không</option>
                 </select>
               </div>
-            </div>
-
-            <div class="filter-row">
               <div class="filter-item">
                 <label for="email">Email</label>
                 <select id="email" class="input-select">
@@ -656,11 +672,8 @@
                   <option value="NO">Không</option>
                 </select>
               </div>
-            </div>
-
-            <div class="filter-row">
               <div class="filter-item">
-                <label for="authen">Authen</label>
+                <label for="authen">Authen (2FA)</label>
                 <select id="authen" class="input-select">
                   <option value="">-- Tất cả --</option>
                   <option value="YES">Có</option>
@@ -678,59 +691,63 @@
             </div>
           </fieldset>
 
+          <!-- Advanced Search -->
           <fieldset class="filter-section">
-            <legend>Tìm Kiếm Nâng Cao</legend>
+            <legend>Tìm Kiếm Nâng Cao (bỏ trống = tất cả)</legend>
+            <div class="filter-grid">
+              <div class="filter-item">
+                <label for="quick-search">Quick Search</label>
+                <input type="text" id="quick-search" class="input-text" placeholder="Nhập từ khóa...">
+              </div>
 
-            <div class="filter-item">
-              <label for="quick-search">Quick Search</label>
-              <input type="text" id="quick-search" class="input-text" placeholder="Nhập từ khóa...">
-            </div>
-
-            <div class="filter-item">
-              <label for="countries">Quốc Gia</label>
-              <input type="text" id="countries" class="input-text" placeholder="VD: VN, US, CN">
-              <small>Ngăn cách bằng dấu phẩy.</small>
+              <div class="filter-item">
+                <label for="countries">Quốc Gia</label>
+                <input type="text" id="countries" class="input-text" placeholder="VN, US, CN">
+                <small>Ngăn cách bằng dấu phẩy</small>
+              </div>
             </div>
           </fieldset>
         </form>
       </aside>
 
-      <main class="center-panel">
-        <div class="data-section">
-          <h2>Dữ Liệu Đầu Vào</h2>
+      <!-- MAIN CONTENT -->
+      <div class="two-column">
+        <main class="center-panel">
+          <h2>📥 Dữ Liệu Đầu Vào</h2>
 
           <div class="data-info" id="data-stats" aria-live="polite" aria-atomic="true">
             <span>Chưa có dữ liệu</span>
           </div>
 
           <label for="text-input" class="sr-only">Input data</label>
-          <textarea id="text-input" class="text-area text-area--input" readonly placeholder="Dữ liệu sẽ hiển thị ở đây sau khi load hoặc paste"></textarea>
-        </div>
+          <textarea id="text-input" class="text-area" readonly placeholder="Dữ liệu sẽ hiển thị ở đây sau khi load hoặc paste"></textarea>
+        </main>
 
-        <div class="action-buttons">
-          <button id="btn-run" class="btn btn-success" disabled>▶️ Run filters</button>
-          <button id="btn-export-full" class="btn btn-info" disabled>📄 Xuất nguyên gốc</button>
-          <button id="btn-export-colon" class="btn btn-info" disabled>👤 Xuất user:pass</button>
-          <button id="btn-export-pipe" class="btn btn-info" disabled>👤 Xuất user|pass</button>
-          <button id="btn-clear-output" class="btn btn-secondary">🗑️ Clear</button>
-        </div>
-      </main>
+        <aside class="output-panel">
+          <h2>📊 Kết Quả</h2>
 
-      <aside class="output-panel">
-        <div class="output-section">
-          <h2>Kết Quả</h2>
           <label for="text-output" class="sr-only">Kết quả sau khi lọc</label>
-          <textarea id="text-output" class="text-area text-area--output" readonly placeholder="Kết quả lọc sẽ hiển thị ở đây"></textarea>
-        </div>
+          <textarea id="text-output" class="text-area" readonly placeholder="Kết quả lọc sẽ hiển thị ở đây"></textarea>
 
-        <div class="log-section">
-          <h2>Nhật Ký</h2>
-          <div id="text-log" class="log-area" role="log" aria-live="polite" aria-label="Nhật ký hoạt động"></div>
-        </div>
-      </aside>
+          <div class="log-section" style="margin-top: 18px;">
+            <h2>📋 Nhật Ký</h2>
+            <div id="text-log" class="log-area" role="log" aria-live="polite" aria-label="Nhật ký hoạt động"></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="action-buttons">
+      <button id="btn-run" class="btn btn-success" disabled>▶️ Run filters</button>
+      <button id="btn-export-full" class="btn btn-info" disabled>📄 Xuất nguyên gốc</button>
+      <button id="btn-export-colon" class="btn btn-info" disabled>👤 Xuất user:pass</button>
+      <button id="btn-export-pipe" class="btn btn-info" disabled>👤 Xuất user|pass</button>
+      <button id="btn-clear-output" class="btn btn-secondary">🗑️ Clear output</button>
     </div>
   </div>
 
+  <!-- PASTE MODAL -->
   <dialog id="paste-modal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -739,15 +756,16 @@
       </div>
 
       <p class="modal-description">Dán dữ liệu vào ô bên dưới, mỗi record một dòng.</p>
-      <textarea id="paste-textarea" class="text-area paste-area" placeholder="Dán dữ liệu tại đây..."></textarea>
+      <textarea id="paste-textarea" class="text-area" placeholder="Dán dữ liệu tại đây..." style="min-height: 320px;"></textarea>
 
-      <div class="modal-footer">
-        <button type="button" id="btn-paste-done" class="btn btn-primary">✓ Xong</button>
+      <div class="modal-footer" style="margin-top: 14px;">
+        <button type="button" id="btn-paste-done" class="btn btn-success">✓ Xong</button>
         <button type="button" id="btn-paste-cancel" class="btn btn-secondary">✕ Hủy</button>
       </div>
     </div>
   </dialog>
 
+  <!-- HIDDEN FILE INPUT -->
   <input type="file" id="file-input" multiple accept=".txt,.csv,.json" class="hidden-file-input" aria-label="Chọn file">
 
   <script>
@@ -795,9 +813,10 @@
 
     function log(msg, type = 'info') {
       const time = new Date().toLocaleTimeString('vi-VN');
+      const className = `log-${type}`;
       els.log.insertAdjacentHTML(
         'afterbegin',
-        `<div class="log-${type}">[${time}] ${escapeHtml(msg)}</div>`
+        `<div class="${className}">[${time}] ${escapeHtml(msg)}</div>`
       );
     }
 
@@ -845,14 +864,12 @@
     };
 
     /**
-     * Trích xuất giá trị text của field từ dòng
-     * Hỗ trợ format: FIELD:value | FIELD:value hoặc FIELD : value | FIELD : value
+     * Extract field value from line
+     * Supports format: FIELD:value | FIELD:value
      */
     function extractFieldValue(line, fieldKey) {
       const aliases = FIELD_MAP[fieldKey] || [fieldKey];
       const text = String(line || '');
-
-      // Tách các segment bằng dấu |
       const segments = text.split('|');
 
       for (const segment of segments) {
@@ -861,11 +878,8 @@
 
         const fieldName = segment.substring(0, colonIdx).trim();
         const fieldValue = segment.substring(colonIdx + 1).trim();
-
-        // Chuẩn hóa tên field để so sánh
         const normalizedField = normalizeSearchText(fieldName);
 
-        // Kiểm tra xem field name có khớp với alias nào không
         for (const alias of aliases) {
           const normalizedAlias = normalizeSearchText(alias);
           if (normalizedField === normalizedAlias) {
@@ -878,7 +892,7 @@
     }
 
     /**
-     * Trích xuất số từ giá trị text
+     * Extract number from field value
      */
     function extractNumber(line, fieldKey) {
       const text = extractFieldValue(line, fieldKey);
@@ -894,7 +908,7 @@
     }
 
     /**
-     * Trích xuất trạng thái Yes/No
+     * Extract Yes/No status
      */
     function extractYesNo(line, fieldKey) {
       const text = extractFieldValue(line, fieldKey);
@@ -909,7 +923,7 @@
     }
 
     /**
-     * Trích xuất trạng thái Facebook
+     * Extract Facebook status
      */
     function extractFacebookStatus(line) {
       const text = extractFieldValue(line, 'FB');
@@ -961,11 +975,9 @@
     function extractSSSSkinList(line) {
       const text = String(line || '');
 
-      // Cố gắng lấy từ format: SSS : N [skin1, skin2, ...]
       const bracketMatch = text.match(/(?:^|\|)\s*SSS\s*:\s*\d+\s*\[([^\]]*)\]/i);
       if (bracketMatch) return bracketMatch[1];
 
-      // Fallback: lấy toàn bộ phần SSS
       const sssMatch = text.match(/(?:^|\|)\s*SSS\s*:\s*(.+?)(?:\||$)/i);
       if (sssMatch) return sssMatch[1];
 
@@ -996,7 +1008,7 @@
         qh: $('qh').value ? Number($('qh').value) : null,
         timesRecharged: $('times-recharged').value ? Number($('times-recharged').value) : null,
         ss: $('ss').value ? Number($('ss').value) : null,
-        sss: $('sss').value ? Number($('sss').value) : null,
+        sss: $('sss-count').value ? Number($('sss-count').value) : null,
         anime: $('anime').value ? Number($('anime').value) : null,
         status: $('status').value.trim(),
         rank: $('rank').value.trim(),
@@ -1181,10 +1193,10 @@
 
       els.textOutput.value = filteredLines.join('\n');
       setExportButtonsEnabled(filteredLines.length > 0);
-      els.stats.innerHTML = `<span>${rawLines.length} dòng dữ liệu • ${filteredLines.length} dòng khớp filter</span>`;
+      els.stats.innerHTML = `<span>📊 ${rawLines.length} dòng dữ liệu • <strong>${filteredLines.length} dòng khớp</strong></span>`;
 
       if (!silent) {
-        log(`Lọc xong: ${filteredLines.length}/${rawLines.length} dòng phù hợp.`);
+        log(`✓ Lọc xong: ${filteredLines.length}/${rawLines.length} dòng phù hợp.`, 'success');
       }
     }
 
@@ -1209,7 +1221,7 @@
         if (user && pass) return { user: user.trim(), pass: pass.trim() };
       }
 
-      // Format: user | pass (2 phần đầu tiên)
+      // Format: user | pass (first 2 parts)
       const pipeParts = String(line || '').split('|').map(part => part.trim());
       if (pipeParts.length >= 2 && pipeParts[0] && pipeParts[1]) {
         const secondLooksLikeField = /^[A-ZÀ-Ỹ0-9 _-]+\s*:/i.test(pipeParts[1]);
@@ -1248,8 +1260,8 @@
       els.run.disabled = !hasData;
       setExportButtonsEnabled(false);
 
-      els.stats.innerHTML = `<span>${rawLines.length} dòng dữ liệu</span>`;
-      log(`Đã nạp ${rawLines.length} dòng dữ liệu.`);
+      els.stats.innerHTML = `<span>📊 ${rawLines.length} dòng dữ liệu</span>`;
+      log(`✓ Đã nạp ${rawLines.length} dòng dữ liệu.`, 'success');
 
       if (hasData && hasActiveFilters()) {
         runFilters({ silent: true });
@@ -1294,7 +1306,7 @@
       els.textOutput.value = '';
       filteredLines = [];
       setExportButtonsEnabled(false);
-      log('Đã xóa kết quả.');
+      log('🗑️ Đã xóa kết quả.');
     });
 
     els.exportFull.addEventListener('click', () => {
@@ -1303,7 +1315,7 @@
         return;
       }
       downloadTxt(`ket-qua-loc-${Date.now()}.txt`, filteredLines);
-      log(`Đã xuất ${filteredLines.length} dòng (nguyên gốc).`);
+      log(`✓ Đã xuất ${filteredLines.length} dòng (nguyên gốc).`, 'success');
     });
 
     els.exportColon.addEventListener('click', () => {
@@ -1318,7 +1330,7 @@
       }
 
       downloadTxt(`user-pass-colon-${Date.now()}.txt`, pairs);
-      log(`Đã xuất ${pairs.length} dòng (user:pass).`);
+      log(`✓ Đã xuất ${pairs.length} dòng (user:pass).`, 'success');
     });
 
     els.exportPipe.addEventListener('click', () => {
@@ -1333,16 +1345,15 @@
       }
 
       downloadTxt(`user-pass-pipe-${Date.now()}.txt`, pairs);
-      log(`Đã xuất ${pairs.length} dòng (user|pass).`);
+      log(`✓ Đã xuất ${pairs.length} dòng (user|pass).`, 'success');
     });
 
     els.reset.addEventListener('click', () => {
       els.form.reset();
-      $('heroes').value = '1-120';
       els.textOutput.value = '';
       filteredLines = [];
       setExportButtonsEnabled(false);
-      log('Đã reset bộ lọc.');
+      log('🔄 Đã reset bộ lọc.');
     });
 
     els.theme.addEventListener('click', () => {
@@ -1353,6 +1364,12 @@
     els.collapse.addEventListener('click', () => {
       document.querySelector('.filter-panel')?.classList.toggle('is-collapsed');
     });
+
+    // Init theme from system preference
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.body.classList.add('dark-mode');
+      els.theme.textContent = '☀️';
+    }
   </script>
 </body>
 </html>
